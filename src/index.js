@@ -7,6 +7,8 @@ import { ConnectedRouter } from "connected-react-router";
 import store, { history } from "./configureStore";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/index.scss'
 
 ReactDOM.render(
   <Provider store={store()}>

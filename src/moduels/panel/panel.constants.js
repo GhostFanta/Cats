@@ -1,0 +1,5 @@
+export const panelConstants = {
+    BREED_FETCHING: 'BREED_FETCHING',
+    BREED_SUCCESS: 'BREED_SUCCESS',
+    BREED_FAILURE: 'BREED_FAILURE'
+};

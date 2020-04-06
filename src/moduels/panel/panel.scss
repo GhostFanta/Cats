@@ -1,0 +1,18 @@
+.cat-list {
+  padding-top: 0;
+  margin: 0;
+  & > div {
+    float: right;
+  }
+}
+
+.cat-detail {
+  margin-top: 8px;
+  position: -webkit-sticky !important;
+  position: sticky;
+  top: 1px;
+
+  & > div {
+    float: left;
+  }
+}

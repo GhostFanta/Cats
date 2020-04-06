@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+$font-family-sans-serif: "Montserrat", sans-serif;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+"Liberation Mono", "Courier New", monospace;
+
+:root {
+  --blue: #547fff;
+  --indigo: #7f3ddb;
+  --purple: #9964e3;
+  --pink: #e54e9a;
+  --red: #f55d5d;
+  --orange: #ff7d47;
+  --yellow: #ffc247;
+  --green: #68ca66;
+  --teal: #3abf94;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray-dark: #3c484f;
+  --primary: #547fff;
+  --secondary: #798892;
+  --success: #3abf94;
+  --info: #9964e3;
+  --warning: #ffc247;
+  --danger: #f55d5d;
+  --light: #f8f9fa;
+  --dark: #3c484f;
+  --primary-light: #dee4ee;
+  --success-light: #ecfaec;
+  --info-light: #f2fafa;
+  --warning-light: #fdf7e6;
+  --danger-light: #fff2ef;
+  --inverse: #495057;
+  --gray: #d6dee5;
+  --default: #e9ecef;
+  --body-bg: #f4f6f8;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Montserrat", sans-serif;
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(font-family-sans-serif);
+}
+
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #f4f6f8;
+  height: 100%;
+  font-family: $font-family-sans-serif;
+}
+
+// Remove bootstrap border
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+#root {
+  height: 100%;
+}

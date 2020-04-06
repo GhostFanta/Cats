@@ -1,0 +1,11 @@
+.side-panel {
+  margin: 20px 10px 50px 20px;
+  top: 10px;
+  position: sticky;
+  position: -webkit-sticky;
+  min-width: 10rem;
+
+  li {
+    list-style-type: none;
+  }
+}

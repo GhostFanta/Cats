@@ -1,0 +1,60 @@
+.header {
+  .app-header {
+    flex-direction: row;
+    & > div > ul > li > a {
+      text-decoration: none;
+    }
+
+    & > div > ul {
+      list-style-type: none;
+      flex-direction: row;
+
+      :nth-child(1) {
+        margin-left: 20px;
+      }
+
+      li {
+        float: left;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        a {
+          align-self: center;
+          color: black;
+        }
+      }
+    }
+  }
+
+  .input-group {
+    & > .form-control {
+      max-width: 200px;
+      height: 30px;
+      border-left: 1px solid #17a2b8 !important;
+      border-top: 1px solid #17a2b8 !important;
+      border-bottom: 1px solid #17a2b8 !important;
+      border-right: 1px solid #17a2b8 !important;
+      border-radius: 2px !important;
+    }
+
+    & > .btn {
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      line-height: 20px;
+      margin-right: auto;
+    }
+  }
+
+  .divider {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 1px;
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+  }
+}
