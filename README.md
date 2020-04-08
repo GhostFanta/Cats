@@ -11,5 +11,10 @@
 ##### Apr 4
 + [ ] Button to switch from list view to table view
 
+##### Apr 6
++ [ ] Implement reducer for loading.
++ [ ] Implement reducer for breed with immer.
++ [ ] connect reducer with the panel component.
+
 # Log
 + [ ] Done basic structure.
