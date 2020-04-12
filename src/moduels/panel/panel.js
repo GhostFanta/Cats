@@ -1,31 +1,47 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { object } from "prop-types";
 import BriefCard from "../../components/briefCard/briefCard";
 import DetailCard from "../../components/detailCard/detailCard";
 import Header from "../../components/header/header";
 import SidePanel from "../../components/sidePanel/sidePanel";
-import { getBreeds } from "./panel.store";
+import { getBriefInfoList, getBreedDetail } from "./panel.store";
 import "./panel.scss";
 
 import { connect } from "react-redux";
 
-class Panel extends React.Component {
-  static propTypes = {
-    getBreeds: PropTypes.func.isRequired,
-  };
+const BriefCardList = ({ infoList, handleClick }) => {
+  if (infoList && infoList.length !== 0) {
+    return (
+      <React.Fragment>
+        {infoList.map((info) => (
+          <BriefCard
+            key={info.name}
+            name={info.name}
+            origin={info.origin}
+            temperament={info.temperament}
+            description={info.description}
+            handleClick={() => handleClick(info.name)}
+          />
+        ))}
+      </React.Fragment>
+    );
+  } else {
+    return null;
+  }
+};
 
+class Panel extends React.Component {
   constructor(props) {
     super(props);
-    this.getBreeds = this.props.getBreeds.bind(this);
+    this.getBreedInfoList = this.props.getBreedInfoList.bind(this);
   }
 
   componentDidMount() {
-    this.getBreeds();
+    this.getBreedInfoList();
   }
 
   render() {
     const sortBy = [""];
-    const breeds = [""];
 
     return (
       <div>
@@ -36,22 +52,22 @@ class Panel extends React.Component {
               <SidePanel
                 recentSearch={this.props.recentSearches}
                 sortBy={sortBy}
-                breeds={breeds}
+                breeds={this.props.breeds}
                 loading={this.props.loading}
               />
             </div>
             <div className="col-10">
               <div className="row">
                 <div className="cat-list col-5">
-                  <BriefCard />
-                  <BriefCard />
-                  <BriefCard />
-                  <BriefCard />
-                  <BriefCard />
-                  <BriefCard />
+                  <BriefCardList
+                    infoList={this.props.briefInfoList}
+                    handleClick={this.props.getBreedDetail}
+                  />
                 </div>
                 <div className="cat-detail col-6">
-                  <DetailCard />
+                  {this.props.currentBreed ? (
+                    <DetailCard currentBreed={this.props.currentBreed} />
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -64,18 +80,15 @@ class Panel extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.loading,
-    sortBy: state.sortBy,
-    breeds: state.breeds,
-    recentSearches: state.recentSearches,
+    briefInfoList: state.panel.briefInfoList,
+    currentBreed: state.panel.currentBreed,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBreeds: () => {
-      return dispatch(getBreeds());
-    },
+    getBreedInfoList: () => dispatch(getBriefInfoList()),
+    getBreedDetail: (breedName) => dispatch(getBreedDetail(breedName)),
   };
 };
 

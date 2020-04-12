@@ -12,17 +12,13 @@ export function getAllBreeds() {
   return ax.get("/breeds");
 }
 
-export async function getBreedByName(name) {
-  try {
-    return await ax.get(`/breeds/search/${name}`);
-  } catch (e) {
-    return e;
-  }
+export function getBreedByName(categoryName) {
+    return ax.get(`/breeds/search?q=${categoryName}`);
 }
 
-export async function getCategories(categoryName) {
+export function getCategories(categoryName) {
   try {
-    return await ax.get(`/breeds/search/${categoryName}`);
+    return ax.get(`/breeds/search?q=${categoryName}`);
   } catch (e) {
     return e;
   }

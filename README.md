@@ -1,20 +1,21 @@
 # Cat
 
-##### Init
-+ [ ] Copy indeed wireframe
-+ [ ] List all cats
-+ [ ] Show cats with detail in stand alone panel like indeed.
+> Cat searching panel based on cat API.
+
+## ToolChain:
++ React
++ Redux
++ React-router
++ Bootstrap
++ axios
+
+##### Feature List
++ [ ] List cats result from search(breed, origin).
++ [ ] Show Recent searches.
++ [ ] Show cats with detail in stand alone panel.
 + [ ] Show all filters alone side the cat page.
-+ [ ] Vote a cat
-+ [ ] Favorite a cat
++ [ ] Vote a cat.
++ [ ] Favorite a cat.
 
-##### Apr 4
-+ [ ] Button to switch from list view to table view
-
-##### Apr 6
-+ [ ] Implement reducer for loading.
-+ [ ] Implement reducer for breed with immer.
-+ [ ] connect reducer with the panel component.
-
-# Log
-+ [ ] Done basic structure.
+##### Additional Feature
++ [ ] Switch view between list and table.

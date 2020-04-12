@@ -1,4 +1,4 @@
-export const loadingReducer = (state = {}, action) => {
+export const loadingReducer = (state = {loading: {}}, action) => {
     const {type} = action;
     const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(type)
 

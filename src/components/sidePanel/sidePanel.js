@@ -1,22 +1,49 @@
 import React from "react";
-import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/ClipLoader";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import ShowMore from "@tedconf/react-show-more";
+
+import { getBreeds } from "../../moduels/panel/panel.store";
 import "./sidePanel.scss";
 
-function Breeds(loading, breeds) {
-  if (loading.breeds) {
+/**
+ * @return {null}
+ */
+const Breeds = ({ loading, breeds }) => {
+  if (loading && loading.breeds) {
     return <ClipLoader />;
   } else {
-    breeds.map((breed) => {
+    if (breeds && Object.keys(breeds).length !== 0) {
       return (
-        <div>
-          <br />
-          <small>{breed}</small>
-        </div>
+        <ShowMore items={breeds} by={3}>
+          {({ current, onMore }) => (
+            <React.Fragment>
+              <ul className="side-panel-breeds overflow-auto">
+                {current.map((item) => (
+                  <li key={item}>
+                    <small>{item}</small>
+                  </li>
+                ))}
+              </ul>
+              <button
+                className="btn text-info"
+                disabled={!onMore}
+                onClick={() => {
+                  if (!!onMore) onMore();
+                }}
+              >
+                <small>More...</small>
+              </button>
+            </React.Fragment>
+          )}
+        </ShowMore>
       );
-    });
+    } else {
+      return null;
+    }
   }
-}
+};
 
 function SortBys(loading, sortBys) {
   if (loading.sorts) {
@@ -34,14 +61,23 @@ function SortBys(loading, sortBys) {
 }
 
 class sidePanel extends React.Component {
+  static propTypes = {
+    breeds: PropTypes.array,
+  };
+
   constructor(props) {
     super(props);
+    this.getBreeds = this.props.getBreeds.bind(this);
     this.state = {
       recentSearches: props.recentSearches,
       sortBy: props.sortBy,
       breeds: props.breeds,
       loading: props.obj,
     };
+  }
+
+  componentDidMount() {
+    this.getBreeds();
   }
 
   render() {
@@ -65,11 +101,26 @@ class sidePanel extends React.Component {
         </div>
         <div className="breed">
           <small className="font-weight-bold mb-3">Breed:</small>
-          <Breeds loading={this.state.loading} breeds={this.state.breeds} />
+          <Breeds loading={this.props.loading} breeds={this.props.breeds} />
         </div>
       </div>
     );
   }
 }
 
-export default sidePanel;
+const mapStateToProps = (state) => {
+  return {
+    breeds: state.panel.breeds,
+    sortBy: state.sortBy,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBreeds: () => {
+      return dispatch(getBreeds());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(sidePanel);
