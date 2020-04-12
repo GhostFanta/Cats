@@ -2,6 +2,34 @@ import React from "react";
 import { ProgressBar } from "react-bootstrap";
 import "./detailCard.scss";
 
+const CustomProgressBar = ({ now }) => {
+  const calVal = (val) => {
+    return (val / 5) * 100;
+  };
+
+  const percent = calVal(now);
+  const variant = () => {
+    if (now === 5)
+        return "primary";
+    if(now === 4)
+        return "success";
+    if(now === 3)
+      return "warning";
+    if(now === 2)
+      return "secondary";
+    if(now === 1)
+      return "danger";
+    return "primary"
+  };
+  return (
+    <ProgressBar
+      className={`progress`}
+      variant={variant()}
+      now={percent}
+    />
+  );
+};
+
 class detailCard extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +37,6 @@ class detailCard extends React.Component {
       currentBreed: this.props.currentBreed,
     };
     this.clickWiki = this.clickWiki.bind(this);
-    this.calVal = this.calVal.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -20,10 +47,6 @@ class detailCard extends React.Component {
 
   clickWiki() {
     window.open(this.state.currentBreed.wikipedia_url);
-  }
-
-  calVal(val){
-    return val / 5 * 100;
   }
 
   render() {
@@ -50,44 +73,44 @@ class detailCard extends React.Component {
           <div className="mt-3 ml-2">
             <div className="row">
               <small className="mr-2 label">Adaptability:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.adaptability)} />
+              <CustomProgressBar now={this.state.currentBreed.adaptability} />
             </div>
             <div className="row">
               <small className="mr-2 label">Affection Level:</small>
-              <ProgressBar className="progress" now={this.calVal(this.state.currentBreed.affection_level)} />
+              <CustomProgressBar now={this.state.currentBreed.affection_level} />
             </div>
             <div className="row">
               <small className="mr-2 label">Dog Friendly:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.dog_friendly)} />
+              <CustomProgressBar now={this.state.currentBreed.dog_friendly} />
             </div>
             <div className="row">
               <small className="mr-2 label">Child Friendly:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.child_friendly)} />
+              <CustomProgressBar now={this.state.currentBreed.child_friendly} />
             </div>
 
             <div className="row">
               <small className="mr-2 label">Energy Level:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.energy_level)} />
+              <CustomProgressBar now={this.state.currentBreed.energy_level} />
             </div>
             <div className="row">
               <small className="mr-2 label">Grooming:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.gromming)} />
+              <CustomProgressBar now={this.state.currentBreed.gromming} />
             </div>
             <div className="row">
               <small className="mr-2 label">Health Issues:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.health_issues)} />
+              <CustomProgressBar now={this.state.currentBreed.health_issues} />
             </div>
             <div className="row">
               <small className="mr-2 label">Intelligence:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.intelligence)} />
+              <CustomProgressBar now={this.state.currentBreed.intelligence} />
             </div>
             <div className="row">
               <small className="mr-2 label">Shedding Level:</small>
-              <ProgressBar className="progress " now={this.calVal(this.state.currentBreed.shedding_level)} />
+              <CustomProgressBar now={this.state.currentBreed.shedding_level} />
             </div>
             <div className="row">
               <small className="mr-2 label">Social Needs:</small>
-              <ProgressBar className="progress" now={this.calVal(this.state.currentBreed.social_needs)} />
+              <CustomProgressBar now={this.state.currentBreed.social_needs} />
             </div>
           </div>
         </div>
