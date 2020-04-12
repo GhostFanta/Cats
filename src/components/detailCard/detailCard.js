@@ -1,6 +1,44 @@
 import React from "react";
 import { ProgressBar } from "react-bootstrap";
+import ClipLoader from "react-spinners/ClipLoader";
 import "./detailCard.scss";
+
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+class CustomCarousel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      images: this.props.images,
+    };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    if (prevProps.images !== this.props.images) {
+      this.setState({ images: this.props.images });
+    }
+  }
+
+  render() {
+    if (!this.state.images) {
+      return <ClipLoader />;
+    } else {
+      return (
+        <div className="flex flex-row justify-content-center align-content-center mt-5">
+          <Carousel autoPlay className="carousel" key={this.state.images}>
+            {this.state.images.map((image) => (
+              <div key={image}>
+                <img key={image} src={image} alt="" />
+              </div>
+            ))}
+          </Carousel>
+        </div>
+      );
+    }
+  }
+}
 
 const CustomProgressBar = ({ now }) => {
   const calVal = (val) => {
@@ -9,24 +47,15 @@ const CustomProgressBar = ({ now }) => {
 
   const percent = calVal(now);
   const variant = () => {
-    if (now === 5)
-        return "primary";
-    if(now === 4)
-        return "success";
-    if(now === 3)
-      return "warning";
-    if(now === 2)
-      return "secondary";
-    if(now === 1)
-      return "danger";
-    return "primary"
+    if (now === 5) return "primary";
+    if (now === 4) return "success";
+    if (now === 3) return "warning";
+    if (now === 2) return "secondary";
+    if (now === 1) return "danger";
+    return "primary";
   };
   return (
-    <ProgressBar
-      className={`progress`}
-      variant={variant()}
-      now={percent}
-    />
+    <ProgressBar className={`progress`} variant={variant()} now={percent} />
   );
 };
 
@@ -35,6 +64,7 @@ class detailCard extends React.Component {
     super(props);
     this.state = {
       currentBreed: this.props.currentBreed,
+      images: this.props.breedImages,
     };
     this.clickWiki = this.clickWiki.bind(this);
   }
@@ -42,6 +72,9 @@ class detailCard extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.currentBreed !== this.props.currentBreed) {
       this.setState({ currentBreed: this.props.currentBreed });
+    }
+    if (prevProps.breedImages !== this.props.breedImages) {
+      this.setState({ images: this.props.breedImages });
     }
   }
 
@@ -77,7 +110,9 @@ class detailCard extends React.Component {
             </div>
             <div className="row">
               <small className="mr-2 label">Affection Level:</small>
-              <CustomProgressBar now={this.state.currentBreed.affection_level} />
+              <CustomProgressBar
+                now={this.state.currentBreed.affection_level}
+              />
             </div>
             <div className="row">
               <small className="mr-2 label">Dog Friendly:</small>
@@ -112,6 +147,9 @@ class detailCard extends React.Component {
               <small className="mr-2 label">Social Needs:</small>
               <CustomProgressBar now={this.state.currentBreed.social_needs} />
             </div>
+          </div>
+          <div>
+            <CustomCarousel images={this.state.images} />
           </div>
         </div>
       </div>

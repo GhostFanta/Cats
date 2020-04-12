@@ -1,0 +1,49 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "RESTful API for chat room",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "test": "test"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "alex",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.18.2",
+    "core-js": "^2.6.9",
+    "cors": "^2.8.4",
+    "error-handler": "^1.0.0",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
+    "express-routes-mapper": "^1.1.0",
+    "express-session": "^1.17.0",
+    "helmet": "^3.12.0",
+    "jsonwebtoken": "^8.2.1",
+    "methods": "^1.1.2",
+    "mongoose": "^5.8.11",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "sequelize": "^5.21.4",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.4",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "husky": "^0.14.3",
+    "jest": "^24.8.0",
+    "nodemon": "^1.17.3",
+    "shx": "^0.2.2",
+    "supertest": "^3.0.0"
+  }
+}

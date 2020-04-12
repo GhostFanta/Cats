@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes, { object } from "prop-types";
 import BriefCard from "../../components/briefCard/briefCard";
 import DetailCard from "../../components/detailCard/detailCard";
 import Header from "../../components/header/header";
@@ -66,7 +65,10 @@ class Panel extends React.Component {
                 </div>
                 <div className="cat-detail col-6">
                   {this.props.currentBreed ? (
-                    <DetailCard currentBreed={this.props.currentBreed} />
+                    <DetailCard
+                      currentBreed={this.props.currentBreed}
+                      breedImages={this.props.breedImages}
+                    />
                   ) : null}
                 </div>
               </div>
@@ -82,6 +84,7 @@ const mapStateToProps = (state) => {
   return {
     briefInfoList: state.panel.briefInfoList,
     currentBreed: state.panel.currentBreed,
+    breedImages: state.panel.breedImages,
   };
 };
 

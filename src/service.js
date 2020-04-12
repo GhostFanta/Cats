@@ -13,7 +13,13 @@ export function getAllBreeds() {
 }
 
 export function getBreedByName(categoryName) {
-    return ax.get(`/breeds/search?q=${categoryName}`);
+  return ax.get(`/breeds/search?q=${categoryName}`);
+}
+
+export function getBreedImages(breedId, numOfImages, size) {
+  return ax.get(
+    `/images/search?limit=${numOfImages}&size=${size}&breed_id=${breedId}`
+  );
 }
 
 export function getCategories(categoryName) {

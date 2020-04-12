@@ -1,5 +1,5 @@
 import { panelConstants } from "./panel.constants";
-import { getAllBreeds, getBreedByName } from "../../service";
+import { getAllBreeds, getBreedByName, getBreedImages } from "../../service";
 import { handleActions } from "../../utils/handleActions";
 import { errorReducer } from "../../utils/reducers/errorReducer";
 
@@ -44,8 +44,6 @@ export function getBriefInfoList() {
   };
 }
 
-export function getSortBys() {}
-
 export function getRecentSeaches() {}
 
 export function getBreedDetail(breedName) {
@@ -57,6 +55,30 @@ export function getBreedDetail(breedName) {
         }
         const currentBreed = res.data && res.data[0];
         dispatch(setCurrentBreed(currentBreed));
+        return currentBreed;
+      })
+      .then((res) => {
+        getBreedImages(res.id).then((res) => {
+          if (res.status !== 200) {
+            throw Error(res.statusText);
+          }
+          const breedImages = res.data && res.data.map((res) => res.url);
+          dispatch(setCurrentBreedImages(breedImages));
+        });
+      })
+      .catch((e) => {});
+  };
+}
+
+export function getImages(breedId) {
+  return (dispatch) => {
+    getBreedImages(breedId, 6, "full")
+      .then((res) => {
+        if (res.status !== 200) {
+          throw Error(res.statusText);
+        }
+        const currentBreed = res.data && res.data[0];
+        dispatch(setCurrentBreedImages(currentBreed));
       })
       .catch((e) => {});
   };
@@ -76,17 +98,17 @@ const setBriefList = (briefInfoList) => {
   };
 };
 
-// const setBreedsFailure = (error) => {
-//   return {
-//     type: "panel/BREEDS_FAILURE",
-//     error,
-//   };
-// };
-
 const setCurrentBreed = (currentBreed) => {
   return {
     type: "panel/CURRENT_BREED_SUCCESS",
     currentBreed,
+  };
+};
+
+const setCurrentBreedImages = (breedImages) => {
+  return {
+    type: "panel/CURRENT_BREED_IMAGES",
+    breedImages,
   };
 };
 
@@ -121,6 +143,11 @@ const panelNormalReducer = (state = {}, action) => {
       return {
         ...state,
         briefInfoList: action.briefInfoList,
+      };
+    case "panel/CURRENT_BREED_IMAGES":
+      return {
+        ...state,
+        breedImages: action.breedImages,
       };
     default:
       return state;

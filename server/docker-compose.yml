@@ -1,0 +1,28 @@
+version: "2"
+services:
+  api:
+    build: ./api/
+    image: chat_api
+    container_name: chat_api
+    links:
+      - mongo
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    container_name: chat_mongo
+    ports:
+    - 27017:27017
+  nginx:
+    image: nginx
+    container_name: chat_nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
+      - ./nginx/mime.types:/etc/nginx/mime.types:ro
+    ports:
+      - 80:80
+    depends_on:
+      - api
