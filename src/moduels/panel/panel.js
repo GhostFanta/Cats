@@ -4,6 +4,7 @@ import DetailCard from "../../components/detailCard/detailCard";
 import Header from "../../components/header/header";
 import SidePanel from "../../components/sidePanel/sidePanel";
 import { getBriefInfoList, getBreedDetail } from "./panel.store";
+import ClipLoader from "react-spinners/ClipLoader";
 import "./panel.scss";
 
 import { connect } from "react-redux";
@@ -25,7 +26,7 @@ const BriefCardList = ({ infoList, handleClick }) => {
       </React.Fragment>
     );
   } else {
-    return null;
+    return <ClipLoader/>;
   }
 };
 

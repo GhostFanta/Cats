@@ -10,8 +10,8 @@ import "./sidePanel.scss";
 /**
  * @return {null}
  */
-const Breeds = ({ loading, breeds }) => {
-  if (loading && loading.breeds) {
+const Breeds = ({ breeds }) => {
+  if (!breeds) {
     return <ClipLoader />;
   } else {
     if (breeds && Object.keys(breeds).length !== 0) {
