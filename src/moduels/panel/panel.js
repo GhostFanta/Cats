@@ -1,6 +1,7 @@
 import React from "react";
 import BriefCard from "../../components/briefCard/briefCard";
 import DetailCard from "../../components/detailCard/detailCard";
+import DetailCardPlaceHolder from '../../components/detailCard/placeholder/detailCardPlaceHolder';
 import Header from "../../components/header/header";
 import SidePanel from "../../components/sidePanel/sidePanel";
 import { getBriefInfoList, getBreedDetail } from "./panel.store";
@@ -8,6 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "./panel.scss";
 
 import { connect } from "react-redux";
+import {impureFinalPropsSelectorFactory} from "react-redux/lib/connect/selectorFactory";
 
 const BriefCardList = ({ infoList, handleClick }) => {
   if (infoList && infoList.length !== 0) {
@@ -70,7 +72,7 @@ class Panel extends React.Component {
                       currentBreed={this.props.currentBreed}
                       breedImages={this.props.breedImages}
                     />
-                  ) : null}
+                  ) : <DetailCardPlaceHolder/>}
                 </div>
               </div>
             </div>
