@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ShowMore from "@tedconf/react-show-more";
 
-import {getBreeds, getRecentSearches } from "../../moduels/panel/panel.store";
+import { getBreeds, getRecentSearches } from "../../moduels/panel/panel.store";
 import "./sidePanel.scss";
 
 /**
@@ -73,6 +73,8 @@ const RecentSearches = ({ recentSearches }) => {
         )}
       </ShowMore>
     );
+  } else {
+    return null;
   }
 };
 
@@ -115,7 +117,7 @@ class sidePanel extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.recentSearches !== this.props.recentSearches) {
-      this.setState({ recentSearches: this.props.recentSearches});
+      this.setState({ recentSearches: this.props.recentSearches });
     }
   }
 
@@ -125,7 +127,7 @@ class sidePanel extends React.Component {
         <div className="recent-search">
           <small className="font-weight-bold mb-3">My recent searches:</small>
           <ul className="mt-3">
-            <RecentSearches recentSearches={this.state.recentSearches}/>
+            <RecentSearches recentSearches={this.state.recentSearches} />
           </ul>
         </div>
         <div className="sort-by">
