@@ -22,10 +22,17 @@ export function getBreedImages(breedId, numOfImages, size) {
   );
 }
 
-export function getCategories(categoryName) {
-  try {
-    return ax.get(`/breeds/search?q=${categoryName}`);
-  } catch (e) {
-    return e;
-  }
+export const cacheServer = axios.create({
+  baseURL: "http://localhost:3001/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export function getRecentSearch() {
+  return cacheServer.get("/recent_search");
+}
+
+export function postSearch(searchTerm) {
+  return cacheServer.post("/recent_search/", { search: searchTerm });
 }

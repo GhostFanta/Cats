@@ -16,7 +16,11 @@ const DetailCardPlaceHolder = () => {
           className="rounded mx-auto d-block"
           alt="..."
         />
-        <h3 className="mt-3">Kittens are on the way...</h3>
+        <div className="flex flex-row align-items-center justify-content-center">
+          <h3 className="mt-3 text-center">
+            Kittens are on the way...
+          </h3>
+        </div>
       </div>
     </div>
   );

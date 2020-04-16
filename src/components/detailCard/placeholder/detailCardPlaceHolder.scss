@@ -40,6 +40,14 @@
       margin: 10px 0 0 0;
       font-size: small;
     }
+
+    .flex {
+      display: flex;
+    }
+
+    h3 {
+      width: fit-content;
+    }
   }
 
   .rounded {

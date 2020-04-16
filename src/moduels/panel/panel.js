@@ -1,15 +1,18 @@
 import React from "react";
 import BriefCard from "../../components/briefCard/briefCard";
 import DetailCard from "../../components/detailCard/detailCard";
-import DetailCardPlaceHolder from '../../components/detailCard/placeholder/detailCardPlaceHolder';
+import DetailCardPlaceHolder from "../../components/detailCard/placeholder/detailCardPlaceHolder";
 import Header from "../../components/header/header";
 import SidePanel from "../../components/sidePanel/sidePanel";
-import { getBriefInfoList, getBreedDetail } from "./panel.store";
+import {
+  getBriefInfoList,
+  getBreedDetail,
+  getBreedsBySearch,
+} from "./panel.store";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./panel.scss";
 
 import { connect } from "react-redux";
-import {impureFinalPropsSelectorFactory} from "react-redux/lib/connect/selectorFactory";
 
 const BriefCardList = ({ infoList, handleClick }) => {
   if (infoList && infoList.length !== 0) {
@@ -28,7 +31,7 @@ const BriefCardList = ({ infoList, handleClick }) => {
       </React.Fragment>
     );
   } else {
-    return <ClipLoader/>;
+    return <ClipLoader />;
   }
 };
 
@@ -72,7 +75,9 @@ class Panel extends React.Component {
                       currentBreed={this.props.currentBreed}
                       breedImages={this.props.breedImages}
                     />
-                  ) : <DetailCardPlaceHolder/>}
+                  ) : (
+                    <DetailCardPlaceHolder />
+                  )}
                 </div>
               </div>
             </div>
@@ -95,6 +100,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getBreedInfoList: () => dispatch(getBriefInfoList()),
     getBreedDetail: (breedName) => dispatch(getBreedDetail(breedName)),
+    getBreedsBySearch: (searchTerm) => dispatch(getBreedsBySearch(searchTerm)),
   };
 };
 

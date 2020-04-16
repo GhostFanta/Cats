@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import Switcher from "../../components/switcher/switcher";
+import { connect } from "react-redux";
 import "./header.scss";
+import { getBreedsBySearch } from "../../moduels/panel/panel.store";
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.state = {
+      searchTerm: "",
+    };
+  }
+
+  handleSearch() {
+    this.props.getBreedsBySearch(this.state.searchTerm);
+  }
+
+  handleEnter(e) {
+    if (e.key === "Enter") {
+      this.props.getBreedsBySearch(this.state.searchTerm);
+      return;
+    }
+  }
+
+  handleChange(e) {
+    this.setState({ searchTerm: e.target.value });
   }
 
   render() {
@@ -29,8 +52,19 @@ class Header extends React.Component {
         </nav>
         <div className="flex flex-row ml-3">
           <div className="input-group mb-4">
-            <input type="text" className="form-control" />
-            <button className="ml-2 btn btn-primary">Find Cat</button>
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.searchTerm}
+              onChange={this.handleChange}
+              onKeyPress={this.handleEnter}
+            />
+            <button
+              className="ml-2 btn btn-primary"
+              onClick={this.handleSearch}
+            >
+              Find Cat
+            </button>
             {/*<Switcher />*/}
           </div>
         </div>
@@ -40,4 +74,16 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    briefInfoList: state.panel.briefInfoList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBreedsBySearch: (searchTerm) => dispatch(getBreedsBySearch(searchTerm)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

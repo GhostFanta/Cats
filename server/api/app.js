@@ -6,7 +6,7 @@ let http = require("http"),
   errorhandler = require("errorhandler"),
   mongoose = require("mongoose");
 
-const esConnection = require('./connection');
+// const esConnection = require('./connection');
 
 console.log(process.env.NODE_ENV);
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ShowMore from "@tedconf/react-show-more";
 
-import { getBreeds } from "../../moduels/panel/panel.store";
+import {getBreeds, getRecentSearches } from "../../moduels/panel/panel.store";
 import "./sidePanel.scss";
 
 /**
@@ -45,6 +45,37 @@ const Breeds = ({ breeds }) => {
   }
 };
 
+const RecentSearches = ({ recentSearches }) => {
+  if (!recentSearches) {
+    return <ClipLoader />;
+  } else if (recentSearches && Object.keys(recentSearches).length !== 0) {
+    return (
+      <ShowMore items={recentSearches} by={3}>
+        {({ current, onMore }) => (
+          <React.Fragment>
+            <ul className="side-panel-breeds overflow-auto">
+              {current.map((item) => (
+                <li key={item}>
+                  <small>{item}</small>
+                </li>
+              ))}
+            </ul>
+            <button
+              className="btn text-info"
+              disabled={!onMore}
+              onClick={() => {
+                if (!!onMore) onMore();
+              }}
+            >
+              <small>More...</small>
+            </button>
+          </React.Fragment>
+        )}
+      </ShowMore>
+    );
+  }
+};
+
 function SortBys(loading, sortBys) {
   if (loading.sorts) {
     return <ClipLoader />;
@@ -68,6 +99,7 @@ class sidePanel extends React.Component {
   constructor(props) {
     super(props);
     this.getBreeds = this.props.getBreeds.bind(this);
+    this.getRecentSearch = this.props.getRecentSearch.bind(this);
     this.state = {
       recentSearches: props.recentSearches,
       sortBy: props.sortBy,
@@ -78,6 +110,13 @@ class sidePanel extends React.Component {
 
   componentDidMount() {
     this.getBreeds();
+    this.getRecentSearch();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.recentSearches !== this.props.recentSearches) {
+      this.setState({ recentSearches: this.props.recentSearches});
+    }
   }
 
   render() {
@@ -86,13 +125,7 @@ class sidePanel extends React.Component {
         <div className="recent-search">
           <small className="font-weight-bold mb-3">My recent searches:</small>
           <ul className="mt-3">
-            {/*{this.recentSearches.map((search) => {*/}
-            {/*  return (*/}
-            {/*    <li>*/}
-            {/*      <small>{search}</small>*/}
-            {/*    </li>*/}
-            {/*  );*/}
-            {/*})}*/}
+            <RecentSearches recentSearches={this.state.recentSearches}/>
           </ul>
         </div>
         <div className="sort-by">
@@ -112,6 +145,7 @@ const mapStateToProps = (state) => {
   return {
     breeds: state.panel.breeds,
     sortBy: state.sortBy,
+    recentSearches: state.panel.recentSearches,
   };
 };
 
@@ -120,6 +154,7 @@ const mapDispatchToProps = (dispatch) => {
     getBreeds: () => {
       return dispatch(getBreeds());
     },
+    getRecentSearch: () => dispatch(getRecentSearches()),
   };
 };
 

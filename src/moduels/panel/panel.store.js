@@ -1,5 +1,11 @@
 import { panelConstants } from "./panel.constants";
-import { getAllBreeds, getBreedByName, getBreedImages } from "../../service";
+import {
+  getAllBreeds,
+  getBreedByName,
+  getBreedImages,
+  getRecentSearch,
+  postSearch,
+} from "../../service";
 import { handleActions } from "../../utils/handleActions";
 import { errorReducer } from "../../utils/reducers/errorReducer";
 
@@ -9,6 +15,7 @@ import { errorReducer } from "../../utils/reducers/errorReducer";
 // };
 
 // action
+// Breeds name on the side panel
 export function getBreeds() {
   return (dispatch) => {
     getAllBreeds()
@@ -20,6 +27,30 @@ export function getBreeds() {
         dispatch(setBreeds(breeds));
       })
       .catch((e) => {});
+  };
+}
+
+// Feed briefInfoCards with search result.
+export function getBreedsBySearch(searchTerm) {
+  return (dispatch) => {
+    getBreedByName(searchTerm)
+      .then((res) => {
+        if (res.status !== 200) {
+          throw Error(res.statusText);
+        }
+        const briefInfoList = res.data.map((item) => {
+          return {
+            name: item["name"],
+            origin: item["origin"],
+            temperament: item["temperament"],
+            description: item["description"],
+          };
+        });
+
+        dispatch(setBriefList(briefInfoList));
+      })
+      .catch((e) => {});
+    postSearch(searchTerm).catch((e) => {});
   };
 }
 
@@ -38,13 +69,34 @@ export function getBriefInfoList() {
             description: item["description"],
           };
         });
-        dispatch(setBriefList(briefInfoList));
+
+        let selector = new Set();
+        while (selector.size < 9) {
+          selector.add(
+            Math.floor(Math.random() * Math.floor(briefInfoList.length))
+          );
+        }
+
+        let feed = [];
+        for (let item of selector) {
+          feed.push(briefInfoList[item]);
+        }
+        dispatch(setBriefList(feed));
       })
       .catch((e) => {});
   };
 }
 
-export function getRecentSeaches() {}
+export function getRecentSearches() {
+  return (dispatch) => {
+    getRecentSearch()
+      .then((res) => {
+        const data = res.data.recentSearches.map((item) => item["search"]);
+        dispatch(setRecentSearch(data));
+      })
+      .catch((e) => {});
+  };
+}
 
 export function getBreedDetail(breedName) {
   return (dispatch) => {
@@ -107,8 +159,15 @@ const setCurrentBreed = (currentBreed) => {
 
 const setCurrentBreedImages = (breedImages) => {
   return {
-    type: "panel/CURRENT_BREED_IMAGES",
+    type: "panel/CURRENT_BREED_IMAGES_SUCCESS",
     breedImages,
+  };
+};
+
+const setRecentSearch = (recentSearches) => {
+  return {
+    type: "panel/RECENT_SEARCH_SUCCESS",
+    recentSearches,
   };
 };
 
@@ -144,10 +203,15 @@ const panelNormalReducer = (state = {}, action) => {
         ...state,
         briefInfoList: action.briefInfoList,
       };
-    case "panel/CURRENT_BREED_IMAGES":
+    case "panel/CURRENT_BREED_IMAGES_SUCCESS":
       return {
         ...state,
         breedImages: action.breedImages,
+      };
+    case "panel/RECENT_SEARCH_SUCCESS":
+      return {
+        ...state,
+        recentSearches: action.recentSearches,
       };
     default:
       return state;
