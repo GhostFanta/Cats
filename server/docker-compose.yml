@@ -7,21 +7,21 @@ services:
     links:
       - mongo
     ports:
-      - 3001:3000
+      - 3001:3001
     depends_on:
       - mongo
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.1.1
-    container_name: cat-elasticsearch
-    volumes:
-      - ./esdata:/usr/share/elasticsearch/data
-    environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.type=single-node
-    ports:
-    - "9300:9300"
-    - "9200:9200"
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.1.1
+#    container_name: cat-elasticsearch
+#    volumes:
+#      - ./esdata:/usr/share/elasticsearch/data
+#    environment:
+#      - bootstrap.memory_lock=true
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - discovery.type=single-node
+#    ports:
+#    - "9300:9300"
+#    - "9200:9200"
   mongo:
     image: mongo
     container_name: cat_mongo
@@ -35,9 +35,9 @@ services:
       - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
       - ./nginx/mime.types:/etc/nginx/mime.types:ro
     ports:
-      - 80:80
+      - 83:80
     depends_on:
       - api
 
-volumes:
-  esdata:
+#volumes:
+#  esdata:
