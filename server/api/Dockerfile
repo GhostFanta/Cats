@@ -19,6 +19,6 @@ RUN npm install
 COPY . .
 
 # Use 3000 as production port
-EXPOSE 3000
+EXPOSE 3005
 
 CMD ["npm", "start"]
