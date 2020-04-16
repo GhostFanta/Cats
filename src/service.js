@@ -23,7 +23,7 @@ export function getBreedImages(breedId, numOfImages, size) {
 }
 
 export const cacheServer = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "http://159.203.17.226:83/api",
   headers: {
     "Content-Type": "application/json",
   },
