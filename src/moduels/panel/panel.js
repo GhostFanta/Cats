@@ -4,12 +4,13 @@ import DetailCard from "../../components/detailCard/detailCard";
 import DetailCardPlaceHolder from "../../components/detailCard/placeholder/detailCardPlaceHolder";
 import Header from "../../components/header/header";
 import SidePanel from "../../components/sidePanel/sidePanel";
+import ClipLoader from "react-spinners/ClipLoader";
+import Switcher from "../../components/switcher/switcher";
 import {
   getBriefInfoList,
   getBreedDetail,
   getBreedsBySearch,
 } from "./panel.store";
-import ClipLoader from "react-spinners/ClipLoader";
 import "./panel.scss";
 
 import { connect } from "react-redux";
@@ -35,6 +36,30 @@ const BriefCardList = ({ infoList, handleClick }) => {
   }
 };
 
+const ListView = ({
+  briefInfoList,
+  currentBreed,
+  breedImages,
+  getBreedDetail,
+}) => {
+  return (
+    <div className="row">
+      <div className="cat-list col-5">
+        <BriefCardList infoList={briefInfoList} handleClick={getBreedDetail} />
+      </div>
+      <div className="cat-detail col-6">
+        {currentBreed ? (
+          <DetailCard currentBreed={currentBreed} breedImages={breedImages} />
+        ) : (
+          <DetailCardPlaceHolder />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const TableView = () => {};
+
 class Panel extends React.Component {
   constructor(props) {
     super(props);
@@ -52,6 +77,9 @@ class Panel extends React.Component {
       <div>
         <Header />
         <div className="container-fluid">
+          <div className="row mt-2 mb-2">
+            <Switcher />
+          </div>
           <div className="row">
             <div className="col-2">
               <SidePanel
@@ -62,24 +90,12 @@ class Panel extends React.Component {
               />
             </div>
             <div className="col-10">
-              <div className="row">
-                <div className="cat-list col-5">
-                  <BriefCardList
-                    infoList={this.props.briefInfoList}
-                    handleClick={this.props.getBreedDetail}
-                  />
-                </div>
-                <div className="cat-detail col-6">
-                  {this.props.currentBreed ? (
-                    <DetailCard
-                      currentBreed={this.props.currentBreed}
-                      breedImages={this.props.breedImages}
-                    />
-                  ) : (
-                    <DetailCardPlaceHolder />
-                  )}
-                </div>
-              </div>
+              <ListView
+                briefInfoList={this.props.briefInfoList}
+                currentBreed={this.props.currentBreed}
+                breedImages={this.props.breedImages}
+                getBreedDetail={this.props.getBreedDetail}
+              />
             </div>
           </div>
         </div>
