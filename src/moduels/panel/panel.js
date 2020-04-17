@@ -64,10 +64,19 @@ class Panel extends React.Component {
   constructor(props) {
     super(props);
     this.getBreedInfoList = this.props.getBreedInfoList.bind(this);
+    this.state = {
+      toggleView: this.props.toggleView,
+    };
   }
 
   componentDidMount() {
     this.getBreedInfoList();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.tableView !== this.props.tableView) {
+      this.setState({ tableView: this.props.tableView });
+    }
   }
 
   render() {
@@ -90,12 +99,14 @@ class Panel extends React.Component {
               />
             </div>
             <div className="col-10">
-              <ListView
-                briefInfoList={this.props.briefInfoList}
-                currentBreed={this.props.currentBreed}
-                breedImages={this.props.breedImages}
-                getBreedDetail={this.props.getBreedDetail}
-              />
+              {this.state.tableView ? null : (
+                <ListView
+                  briefInfoList={this.props.briefInfoList}
+                  currentBreed={this.props.currentBreed}
+                  breedImages={this.props.breedImages}
+                  getBreedDetail={this.props.getBreedDetail}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -109,6 +120,7 @@ const mapStateToProps = (state) => {
     briefInfoList: state.panel.briefInfoList,
     currentBreed: state.panel.currentBreed,
     breedImages: state.panel.breedImages,
+    tableView: state.components.tableView,
   };
 };
 
