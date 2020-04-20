@@ -13,7 +13,6 @@
 + [ ] List cats result from search(breed, origin).
 + [ ] Show Recent searches.
     + [ ] Supported by backend api GET/SET
-    + [ ]
 + [ ] Show cats with detail in stand alone panel.
 + [ ] Show all filters alone side the cat page.
 + [ ] Vote a cat.
