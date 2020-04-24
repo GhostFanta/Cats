@@ -1,4 +1,3 @@
-import { panelConstants } from "./panel.constants";
 import {
   getAllBreeds,
   getBreedByName,
@@ -8,11 +7,7 @@ import {
 } from "../../service";
 import { handleActions } from "../../utils/handleActions";
 import { errorReducer } from "../../utils/reducers/errorReducer";
-
-// const initialState = {
-//   breeds: null,
-//   currentBreed: null,
-// };
+import { createDispatchHook } from "react-redux";
 
 // action
 // Breeds name on the side panel
@@ -87,6 +82,30 @@ export function getBriefInfoList() {
   };
 }
 
+export function getTableInfo() {
+  return (dispatch) => {
+    getAllBreeds()
+      .then((res) => {
+        if (res.status !== 200) {
+          throw Error(res.statusText);
+        }
+
+        const tableDataList = res.data.map((item) => {
+          return {
+            id: item.id,
+            name: item["name"],
+            origin: item["origin"],
+            life_span: item["life_span"],
+            weight: item.weight.imperial,
+          };
+        });
+
+        dispatch(setTableData(tableDataList));
+      })
+      .catch((e) => {});
+  };
+}
+
 export function getRecentSearches() {
   return (dispatch) => {
     getRecentSearch()
@@ -147,6 +166,13 @@ const setBriefList = (briefInfoList) => {
   return {
     type: "panel/BRIEF_INFO_LIST_SUCCESS",
     briefInfoList,
+  };
+};
+
+const setTableData = (tableData) => {
+  return {
+    type: "panel/TABLE_DATA_SUCCESS",
+    tableData,
   };
 };
 
@@ -212,6 +238,11 @@ const panelNormalReducer = (state = {}, action) => {
       return {
         ...state,
         recentSearches: action.recentSearches,
+      };
+    case "panel/TABLE_DATA_SUCCESS":
+      return {
+        ...state,
+        tableData: action.tableData,
       };
     default:
       return state;

@@ -6,10 +6,9 @@ export const toggleView = () => {
 };
 
 //reducer
-const componentsNormalReducer = (state = {}, action) => {
+const componentsNormalReducer = (state = {tableView: false}, action) => {
   switch (action.type) {
     case "components/TOGGLE_VIEW":
-      console.log('toggle')
       return {
         ...state,
         tableView: !state.tableView,

@@ -1,4 +1,6 @@
 import React from "react";
+import { useTable } from "react-table";
+
 import BriefCard from "../../components/briefCard/briefCard";
 import DetailCard from "../../components/detailCard/detailCard";
 import DetailCardPlaceHolder from "../../components/detailCard/placeholder/detailCardPlaceHolder";
@@ -10,6 +12,7 @@ import {
   getBriefInfoList,
   getBreedDetail,
   getBreedsBySearch,
+  getTableInfo,
 } from "./panel.store";
 import "./panel.scss";
 
@@ -58,12 +61,69 @@ const ListView = ({
   );
 };
 
-const TableView = () => {};
+const Table = ({ columns, data }) => {
+  const defaultColumn = React.useMemo(
+    () => ({
+      width: 150,
+    }),
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data,
+    defaultColumn,
+  });
+
+  // Render the UI for your table
+  return (
+    <table className="table-view table" {...getTableProps()}>
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <th scope="col" {...column.getHeaderProps()}>
+                {column.render("Header")}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map((cell) => {
+                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
+
+const TableView = ({ columns, data }) => {
+  if (!data) {
+    return <ClipLoader />;
+  } else {
+    return <Table columns={columns} data={data} />;
+  }
+};
 
 class Panel extends React.Component {
   constructor(props) {
     super(props);
     this.getBreedInfoList = this.props.getBreedInfoList.bind(this);
+    this.getTableInfo = this.props.getTableInfo.bind(this);
     this.state = {
       toggleView: this.props.toggleView,
     };
@@ -71,6 +131,7 @@ class Panel extends React.Component {
 
   componentDidMount() {
     this.getBreedInfoList();
+    this.getTableInfo();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -82,6 +143,24 @@ class Panel extends React.Component {
   render() {
     const sortBy = [""];
 
+    const columns = [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Origin",
+        accessor: "origin",
+      },
+      {
+        Header: "Life Span",
+        accessor: "life_span",
+      },
+      {
+        Header: "Weight",
+        accessor: "weight",
+      },
+    ];
     return (
       <div>
         <Header />
@@ -99,7 +178,9 @@ class Panel extends React.Component {
               />
             </div>
             <div className="col-10">
-              {this.state.tableView ? null : (
+              {this.state.tableView ? (
+                <TableView columns={columns} data={this.props.tableData} />
+              ) : (
                 <ListView
                   briefInfoList={this.props.briefInfoList}
                   currentBreed={this.props.currentBreed}
@@ -118,6 +199,7 @@ class Panel extends React.Component {
 const mapStateToProps = (state) => {
   return {
     briefInfoList: state.panel.briefInfoList,
+    tableData: state.panel.tableData,
     currentBreed: state.panel.currentBreed,
     breedImages: state.panel.breedImages,
     tableView: state.components.tableView,
@@ -127,6 +209,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getBreedInfoList: () => dispatch(getBriefInfoList()),
+    getTableInfo: () => dispatch(getTableInfo()),
     getBreedDetail: (breedName) => dispatch(getBreedDetail(breedName)),
     getBreedsBySearch: (searchTerm) => dispatch(getBreedsBySearch(searchTerm)),
   };
