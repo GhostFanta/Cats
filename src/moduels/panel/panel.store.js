@@ -97,6 +97,7 @@ export function getTableInfo() {
             origin: item["origin"],
             life_span: item["life_span"],
             weight: item.weight.imperial,
+            temperament: item.temperament,
           };
         });
 

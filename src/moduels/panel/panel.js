@@ -1,5 +1,5 @@
-import React from "react";
-import { useTable } from "react-table";
+import React, { useState } from "react";
+import { useTable, useFilters } from "react-table";
 
 import BriefCard from "../../components/briefCard/briefCard";
 import DetailCard from "../../components/detailCard/detailCard";
@@ -64,10 +64,32 @@ const ListView = ({
 const Table = ({ columns, data }) => {
   const defaultColumn = React.useMemo(
     () => ({
-      width: 150,
+      Filter: ({ column: { filterValue, preFilteredRows, setFilter } }) => {
+        const count = preFilteredRows.length;
+
+        return (
+          <div className="input-group">
+            <input
+              className="input-group-text w-50"
+              value={filterValue || ""}
+              onChange={(e) => {
+                setFilter(e.target.value || undefined);
+              }}
+              placeholder={`Search ${count} records`}
+            />
+          </div>
+        );
+      },
     }),
     []
   );
+
+  const [filter, setFilter] = useState("");
+
+  const handleFilterChange = (e) => {
+    const value = e.target.value || undefined;
+    setFilter(value);
+  };
 
   const {
     getTableProps,
@@ -75,39 +97,47 @@ const Table = ({ columns, data }) => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({
-    columns,
-    data,
-    defaultColumn,
-  });
+  } = useTable(
+    {
+      columns,
+      data,
+      defaultColumn,
+    },
+    useFilters
+  );
 
   // Render the UI for your table
   return (
-    <table className="table-view table" {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th scope="col" {...column.getHeaderProps()}>
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-              })}
+    <div>
+      <table className="table-view table" {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th scope="col" {...column.getHeaderProps()}>
+                  {column.render("Header")}
+                  <div>{column.canFilter ? column.render("Filter") : null}</div>
+                </th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
