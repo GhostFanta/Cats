@@ -1,10 +1,10 @@
-let http = require("http"),
-  methods = require("methods"),
-  express = require("express"),
-  bodyParser = require("body-parser"),
-  cors = require("cors"),
-  errorhandler = require("errorhandler"),
-  mongoose = require("mongoose");
+import http from "http";
+import methods from "methods";
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import errorhandler from "errorhandler";
+import cors from "cors";
 
 // const esConnection = require('./connection');
 
@@ -33,6 +33,8 @@ app.use(require("./routes"));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-let server = app.listen(process.env.PORT || 3005, function () {
-  console.log("Listening on port " + server.address().port);
-});
+// let server = app.listen(process.env.PORT || 3005, function () {
+//   console.log("Listening on port " + server.address().port);
+// });
+
+export default app;
