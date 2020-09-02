@@ -1,9 +1,6 @@
-import http from "http";
-import methods from "methods";
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import errorhandler from "errorhandler";
 import cors from "cors";
 
 console.log(process.env.NODE_ENV);
