@@ -1,7 +1,7 @@
 version: "2"
 services:
   api:
-    build: ./api/app
+    build: ./api
     image: cat_api
     container_name: cat_api
     links:
