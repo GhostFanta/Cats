@@ -1,6 +1,7 @@
-# Cat
+# Project Breeder 
 
-> Cat searching panel based on cat API.
+> Pet searching panel based on integrated third party API. 
+> 云撸猫助手, 顺便捎带上狗子们, 特么编程要有爱啊同志们...
 
 ## ToolChain:
 + React
@@ -20,3 +21,4 @@
 
 ##### Additional Feature
 + [ ] Switch view between list and table.
+

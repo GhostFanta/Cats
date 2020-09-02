@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Route } from 'react-router';
 import { useTable, useFilters } from "react-table";
 
 import BriefCard from "../../components/briefCard/briefCard";
@@ -17,6 +18,7 @@ import {
 import "./panel.scss";
 
 import { connect } from "react-redux";
+import Gallery from '../gallery/gallery';
 
 const BriefCardList = ({ infoList, handleClick }) => {
   if (infoList && infoList.length !== 0) {
@@ -194,33 +196,38 @@ class Panel extends React.Component {
     return (
       <div>
         <Header />
-        <div className="container-fluid">
-          <div className="row mt-2 mb-2">
-            <Switcher />
-          </div>
-          <div className="row">
-            <div className="col-2">
-              <SidePanel
-                recentSearch={this.props.recentSearches}
-                sortBy={sortBy}
-                breeds={this.props.breeds}
-                loading={this.props.loading}
-              />
-            </div>
-            <div className="col-10">
-              {this.state.tableView ? (
-                <TableView columns={columns} data={this.props.tableData} />
-              ) : (
-                <ListView
-                  briefInfoList={this.props.briefInfoList}
-                  currentBreed={this.props.currentBreed}
-                  breedImages={this.props.breedImages}
-                  getBreedDetail={this.props.getBreedDetail}
-                />
-              )}
-            </div>
-          </div>
-        </div>
+          <Route path="/search" render={()=> {
+            return(<div className="container-fluid">
+              <div className="row mt-2 mb-2">
+                <Switcher />
+              </div>
+              <div className="row">
+                <div className="col-2">
+                  <SidePanel
+                      recentSearch={this.props.recentSearches}
+                      sortBy={sortBy}
+                      breeds={this.props.breeds}
+                      loading={this.props.loading}
+                  />
+                </div>
+                <div className="col-10">
+                  {this.state.tableView ? (
+                      <TableView columns={columns} data={this.props.tableData} />
+                  ) : (
+                      <ListView
+                          briefInfoList={this.props.briefInfoList}
+                          currentBreed={this.props.currentBreed}
+                          breedImages={this.props.breedImages}
+                          getBreedDetail={this.props.getBreedDetail}
+                      />
+                  )}
+                </div>
+              </div>
+            </div>)
+          }} />
+          <Route path="/gallery" render={()=>{
+              return (<Gallery/>)
+          }}/>
       </div>
     );
   }

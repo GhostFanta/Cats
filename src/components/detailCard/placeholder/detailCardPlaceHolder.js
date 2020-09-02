@@ -18,7 +18,7 @@ const DetailCardPlaceHolder = () => {
         />
         <div className="flex flex-row align-items-center justify-content-center">
           <h3 className="mt-3 text-center">
-            Kittens are on the way...
+            Furry friends are on the way...
           </h3>
         </div>
       </div>

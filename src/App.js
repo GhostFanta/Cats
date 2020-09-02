@@ -6,8 +6,6 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/gallery" component={Panel} />
-        <Route path="/search" component={Panel} />
         <Route path="/" component={Panel} />
       </Switch>
     </div>
