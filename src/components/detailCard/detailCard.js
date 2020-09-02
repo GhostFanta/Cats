@@ -102,51 +102,91 @@ class detailCard extends React.Component {
         <div className="detail-card-content overflow-auto">
           <h6 className="mt-1">{this.state.currentBreed.origin}</h6>
           <small className="font-weight-bold">Breed Description:</small>
-          <p className="mb-3">{this.state.currentBreed.description}</p>
-          <div className="mt-3 ml-2">
-            <div className="row">
-              <small className="mr-2 label">Adaptability:</small>
-              <CustomProgressBar now={this.state.currentBreed.adaptability} />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Affection Level:</small>
-              <CustomProgressBar
-                now={this.state.currentBreed.affection_level}
-              />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Dog Friendly:</small>
-              <CustomProgressBar now={this.state.currentBreed.dog_friendly} />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Child Friendly:</small>
-              <CustomProgressBar now={this.state.currentBreed.child_friendly} />
-            </div>
+          {
+            this.state.currentBreed.description ? (
+                <p className="mb-3">{this.state.currentBreed.description}</p>
 
-            <div className="row">
-              <small className="mr-2 label">Energy Level:</small>
-              <CustomProgressBar now={this.state.currentBreed.energy_level} />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Grooming:</small>
-              <CustomProgressBar now={this.state.currentBreed.gromming} />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Health Issues:</small>
-              <CustomProgressBar now={this.state.currentBreed.health_issues} />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Intelligence:</small>
-              <CustomProgressBar now={this.state.currentBreed.intelligence} />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Shedding Level:</small>
-              <CustomProgressBar now={this.state.currentBreed.shedding_level} />
-            </div>
-            <div className="row">
-              <small className="mr-2 label">Social Needs:</small>
-              <CustomProgressBar now={this.state.currentBreed.social_needs} />
-            </div>
+            ): (<p>NA</p>)
+          }
+          <div className="mt-3 ml-2">
+              {
+                this.state.currentBreed.adaptability ? (<div className="row">
+                  <small className="mr-2 label">Adaptability:</small>
+                  <CustomProgressBar now={this.state.currentBreed.adaptability} />
+                </div>) : null
+              }
+            {
+              this.state.currentBreed.affection_level ? (<div className="row">
+                <small className="mr-2 label">Affection Level:</small>
+                <CustomProgressBar
+                    now={this.state.currentBreed.affection_level}
+                />
+              </div>) : null
+            }
+            {
+                this.state.currentBreed.dog_friendly ? (
+                    <div className="row">
+                      <small className="mr-2 label">Dog Friendly:</small>
+                      <CustomProgressBar now={this.state.currentBreed.dog_friendly} />
+                    </div>
+                ) : null
+            }
+            {
+                this.state.currentBreed.child_friendly ? (
+                    <div className="row">
+                      <small className="mr-2 label">Child Friendly:</small>
+                      <CustomProgressBar now={this.state.currentBreed.child_friendly} />
+                    </div>
+                ) : null
+            }
+            {
+                this.state.currentBreed.energy_level ? (
+                    <div className="row">
+                      <small className="mr-2 label">Energy Level:</small>
+                      <CustomProgressBar now={this.state.currentBreed.energy_level} />
+                    </div>
+                ) : null
+            }
+            {
+                this.state.currentBreed.gromming ? (
+                    <div className="row">
+                      <small className="mr-2 label">Grooming:</small>
+                      <CustomProgressBar now={this.state.currentBreed.gromming} />
+                    </div>
+                ) : null
+            }
+            {
+                this.state.currentBreed.health_issues ? (
+                    <div className="row">
+                      <small className="mr-2 label">Health Issues:</small>
+                      <CustomProgressBar now={this.state.currentBreed.health_issues} />
+                    </div>
+                ) : null
+            }
+            {
+                this.state.currentBreed.intelligence ? (
+                    <div className="row">
+                      <small className="mr-2 label">Intelligence:</small>
+                      <CustomProgressBar now={this.state.currentBreed.intelligence} />
+                    </div>
+                ) : null
+            }
+            {
+                this.state.currentBreed.shedding_level ? (
+                    <div className="row">
+                      <small className="mr-2 label">Shedding Level:</small>
+                      <CustomProgressBar now={this.state.currentBreed.shedding_level} />
+                    </div>
+                ) : null
+            }
+            {
+                this.state.currentBreed.social_needs ? (
+                    <div className="row">
+                      <small className="mr-2 label">Social Needs:</small>
+                      <CustomProgressBar now={this.state.currentBreed.social_needs} />
+                    </div>
+                ) : null
+            }
           </div>
           <div>
             <CustomCarousel images={this.state.images} />

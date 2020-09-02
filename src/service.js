@@ -1,10 +1,9 @@
 import axios from "axios";
 
 export const ax = axios.create({
-  baseURL: "https://api.thecatapi.com/v1",
+  baseURL: "http://localhost:3005/api",
   headers: {
     "Content-Type": "application/json",
-    "x-api-key": "152c9ff9-228c-43b9-9c70-d35256c5409e",
   },
 });
 
@@ -16,9 +15,12 @@ export function getBreedByName(categoryName) {
   return ax.get(`/breeds/search?q=${categoryName}`);
 }
 
-export function getBreedImages(breedId, numOfImages, size) {
+export function getBreedImages(breedId, numOfImages, picSize) {
+  let limit = numOfImages ? numOfImages : 6;
+  let size = picSize ? picSize : "full";
+
   return ax.get(
-    `/images/search?limit=${numOfImages}&size=${size}&breed_id=${breedId}`
+    `/breeds/images?limit=${limit}&size=${size}&breed_id=${breedId}`
   );
 }
 

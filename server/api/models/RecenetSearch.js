@@ -13,4 +13,4 @@ RecentSearch.methods.toJson = function () {
     }
 };
 
-mongoose.model('RecentSearch', RecentSearch)
+mongoose.model('RecentSearch', RecentSearch);

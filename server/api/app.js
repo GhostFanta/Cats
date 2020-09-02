@@ -6,8 +6,6 @@ import mongoose from "mongoose";
 import errorhandler from "errorhandler";
 import cors from "cors";
 
-// const esConnection = require('./connection');
-
 console.log(process.env.NODE_ENV);
 
 let isProd = process.env.NODE_ENV === "production";
@@ -21,8 +19,6 @@ if (isProd) {
   mongoose.set("debug", true);
 }
 
-
-
 require("./models/RecenetSearch");
 
 app.use(cors());
@@ -30,11 +26,7 @@ app.use(require("morgan")("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(require("./routes"));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// let server = app.listen(process.env.PORT || 3005, function () {
-//   console.log("Listening on port " + server.address().port);
-// });
 
 export default app;

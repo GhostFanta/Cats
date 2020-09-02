@@ -1,7 +1,6 @@
 # Project Breeder 
 
 > Pet searching panel based on integrated third party API. 
-> 云撸猫助手, 顺便捎带上狗子们, 特么编程要有爱啊同志们...
 
 ## ToolChain:
 + React
@@ -11,14 +10,21 @@
 + axios
 
 ##### Feature List
-+ [ ] List cats result from search(breed, origin).
++ [ ] List breeds result from search(breed, origin).
 + [ ] Show Recent searches.
     + [ ] Supported by backend api GET/SET
-+ [ ] Show cats with detail in stand alone panel.
++ [ ] Show breeds with detail in stand alone panel.
 + [ ] Show all filters alone side the cat page.
-+ [ ] Vote a cat.
-+ [ ] Favorite a cat.
++ [ ] Vote a breed.
++ [ ] Show Geo map of breeds with popup
+
+##### API CheckList
++ [ ] List all breeds
++ [ ] Get Breed Detail
++ [ ] Get Images of a breed
++ [ ] Vote for a breed
++ [ ] Get votes of a breed
+
 
 ##### Additional Feature
 + [ ] Switch view between list and table.
-

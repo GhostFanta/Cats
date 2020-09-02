@@ -5,9 +5,6 @@ import {
   getRecentSearch,
   postSearch,
 } from "../../service";
-import { handleActions } from "../../utils/handleActions";
-import { errorReducer } from "../../utils/reducers/errorReducer";
-import { createDispatchHook } from "react-redux";
 
 // action
 // Breeds name on the side panel

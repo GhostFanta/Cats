@@ -2,9 +2,9 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins/breakpoints";
 .brief-card {
-  width: 95%;
   max-width: 35rem;
   margin: 8px;
+  width: 100%;
 
   .card-body {
     @include media-breakpoint-up(md) {
