@@ -1,7 +1,7 @@
 version: "2"
 services:
   api:
-    build: ./api/
+    build: ./api/app
     image: cat_api
     container_name: cat_api
     links:
@@ -10,18 +10,6 @@ services:
       - 3005:3005
     depends_on:
       - mongo
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:6.1.1
-#    container_name: cat-elasticsearch
-#    volumes:
-#      - ./esdata:/usr/share/elasticsearch/data
-#    environment:
-#      - bootstrap.memory_lock=true
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#      - discovery.type=single-node
-#    ports:
-#    - "9300:9300"
-#    - "9200:9200"
   mongo:
     image: mongo
     container_name: cat_mongo
