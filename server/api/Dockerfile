@@ -16,7 +16,7 @@ COPY package*.json ./
 RUN npm install
 
 # copy all resources
-COPY .. .
+COPY . .
 
 # Use 3000 as production port
 EXPOSE 3005
