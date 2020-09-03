@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const ax = axios.create({
   baseURL: "http://159.203.17.226:83/api",
+  // baseURL: "http://localhost:3005/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -26,6 +27,7 @@ export function getBreedImages(breedId, numOfImages, picSize) {
 
 export const cacheServer = axios.create({
   baseURL: "http://159.203.17.226:83/api",
+  // baseURL: "http://localhost:3005/api",
   headers: {
     "Content-Type": "application/json",
   },
