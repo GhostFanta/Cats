@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router";
+import {Switch, Route, Redirect} from "react-router";
 import Panel from './moduels/panel/panel';
 
 function App() {
@@ -7,6 +7,9 @@ function App() {
     <div className="App">
       <Switch>
         <Route path="/search" component={Panel} />
+          <Route exact path="/" >
+              <Redirect to="/search"/>
+          </Route>
       </Switch>
     </div>
   );

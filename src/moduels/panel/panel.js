@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route } from 'react-router';
+import { Route, Redirect } from 'react-router';
 import { useTable, useFilters } from "react-table";
 
 import BriefCard from "../../components/briefCard/briefCard";
@@ -228,6 +228,7 @@ class Panel extends React.Component {
           <Route path="/gallery" render={()=>{
               return (<Gallery/>)
           }}/>
+
       </div>
     );
   }
