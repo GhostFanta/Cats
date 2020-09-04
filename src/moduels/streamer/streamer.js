@@ -14,14 +14,13 @@ class Streamer extends React.Component{
     }
 
     toggleState(){
-        console.log("open")
         this.setState({toggled: !this.state.toggled});
     }
 
     render() {
         return (
             this.state.toggled ? (
-                    <button className="streamer-btn btn btn-primary rounded" onClick={this.toggleState}>Open adoption stream</button>
+                    <button className="streamer-btn btn btn-primary rounded" onClick={this.toggleState}>Adoption Stream</button>
                 ):(
             <div className="streamer">
                 <button className="btn btn-sm rounded bg-danger text-light float-right" onClick={this.toggleState}>x</button>

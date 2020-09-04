@@ -153,6 +153,10 @@ export function getImages(breedId) {
   };
 }
 
+export function getGalleryImages(breed, origin) {
+
+};
+
 const setBreeds = (breeds) => {
   return {
     type: "panel/BREEDS_SUCCESS",
@@ -195,18 +199,6 @@ const setRecentSearch = (recentSearches) => {
   };
 };
 
-// reducer
-// const panelReducer = {
-//   BREED_SUCCESS(state, action) {
-//     // state.loading.breeds = false;
-//     state.breeds = action.breeds;
-//   },
-//   BREED_FAILURE(state, action) {
-//     // state.loading.breeds = false;
-//     state.breeds = null;
-//   },
-// };
-
 const panelNormalReducer = (state = {}, action) => {
   switch (action.type) {
     // sidepanel breeds
@@ -246,13 +238,5 @@ const panelNormalReducer = (state = {}, action) => {
       return state;
   }
 };
-
-// export default (state = initialState, action) =>
-//   handleActions({
-//     state,
-//     action,
-//     reducers: panelReducer,
-//     namespace: "panel",
-//   });
 
 export default panelNormalReducer;
