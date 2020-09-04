@@ -26,6 +26,3 @@ services:
       - 83:80
     depends_on:
       - api
-
-#volumes:
-#  esdata:

@@ -9,7 +9,13 @@ const BriefCard = ({ name, origin, temperament, description, handleClick }) => {
           <h5 className="card-title">{name}</h5>
           <h6 className="card-subtitle mb-2 text-muted">{origin}</h6>
           <small className="text-danger ml-auto">{temperament}</small>
-          <p className="card-text mt-2">{description}</p>
+          {
+
+              description ?
+            <p className="card-text mt-2">{description}</p>
+                  :
+                  <p className="card-text text-secondary mt-2">No description available for this breed.</p>
+          }
           <a onClick={handleClick} className="card-link text-secondary">
             See More
           </a>

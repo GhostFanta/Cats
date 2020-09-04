@@ -7,9 +7,10 @@ function App() {
     <div className="App">
       <Switch>
         <Route path="/search" component={Panel} />
-          <Route exact path="/" >
-              <Redirect to="/search"/>
-          </Route>
+        <Route path="/gallery" component={Panel} />
+        <Route exact path="/" >
+            <Redirect to="/search"/>
+        </Route>
       </Switch>
     </div>
   );

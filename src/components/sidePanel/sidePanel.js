@@ -25,7 +25,7 @@ const Breeds = ({ breeds }) => {
   } else {
     if (breeds && Object.keys(breeds).length !== 0) {
       return (
-        <ShowMore items={breeds} by={3}>
+        <ShowMore items={breeds} by={6}>
           {({ current, onMore }) => (
             <React.Fragment>
               <ul className="side-panel-breeds overflow-auto">

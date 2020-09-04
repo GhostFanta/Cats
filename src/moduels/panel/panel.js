@@ -228,7 +228,6 @@ class Panel extends React.Component {
           <Route path="/gallery" render={()=>{
               return (<Gallery/>)
           }}/>
-
       </div>
     );
   }

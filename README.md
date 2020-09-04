@@ -17,6 +17,7 @@
 + [ ] Show all filters alone side the cat page.
 + [ ] Vote a breed.
 + [ ] Show Geo map of breeds with popup
++ [ ] Show info stream of pets for adoption in a rolling bases.
 
 ##### API CheckList
 + [ ] List all breeds
@@ -28,3 +29,7 @@
 
 ##### Additional Feature
 + [ ] Switch view between list and table.
+
+
+### Third Party Description 
+一个Cat Person决定只靠兴趣来写一些东西, 但是他并不知道什么样的feature是有意思的feature, 如果你脑子里有什么东西一闪而过, 欢迎在Issue里留一个脚印.

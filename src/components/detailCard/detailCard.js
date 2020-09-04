@@ -105,8 +105,7 @@ class detailCard extends React.Component {
           {
             this.state.currentBreed.description ? (
                 <p className="mb-3">{this.state.currentBreed.description}</p>
-
-            ): (<p>NA</p>)
+            ): (<p>No description available for this breed.</p>)
           }
           <div className="mt-3 ml-2">
               {
