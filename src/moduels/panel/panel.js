@@ -9,6 +9,8 @@ import Header from "../../components/header/header";
 import SidePanel from "../../components/sidePanel/sidePanel";
 import ClipLoader from "react-spinners/ClipLoader";
 import Switcher from "../../components/switcher/switcher";
+import Streamer from "../streamer/streamer";
+
 import {
   getBriefInfoList,
   getBreedDetail,
@@ -199,6 +201,7 @@ class Panel extends React.Component {
           <Route path="/search" render={()=> {
             return(<div className="container-fluid">
               <div className="row mt-2 mb-2">
+                <button className="btn btn-outline-success rounded-pill ml-4" onClick={this.getBreedInfoList}>I am feeling lucky</button>
                 <Switcher />
               </div>
               <div className="row">
@@ -228,6 +231,7 @@ class Panel extends React.Component {
           <Route path="/gallery" render={()=>{
               return (<Gallery/>)
           }}/>
+          <Streamer/>
       </div>
     );
   }
