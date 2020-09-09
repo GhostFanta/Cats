@@ -22,6 +22,24 @@ import "./panel.scss";
 import { connect } from "react-redux";
 import Gallery from '../gallery/gallery';
 
+import styled from "styled-components";
+
+const Button = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${props => props.primary ? "palevioletred" : "#000000"};
+  color: ${props => props.primary ? "white" : "#ffffff"};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid grey;
+  border-radius: 50px;
+  text-align: center;
+  letter-spacing: normal;
+  box-shadow:rgb(0, 94, 173) 0px 1px 1px 0px, rgba(0, 125, 238, 0.32) 0px 3px 13px 0px, rgba(0, 0, 0, 0.15) 0px 6px 9px 0px
+`;
+
+
 const BriefCardList = ({ infoList, handleClick }) => {
   if (infoList && infoList.length !== 0) {
     return (
@@ -201,7 +219,8 @@ class Panel extends React.Component {
           <Route path="/search" render={()=> {
             return(<div className="container-fluid">
               <div className="row mt-2 mb-2">
-                <button className="btn btn-outline-success rounded-pill ml-4" onClick={this.getBreedInfoList}>I am feeling lucky</button>
+                        <Button
+                        onClick={this.getBreedInfoList}>I am feeling lucky</Button>
                 <Switcher />
               </div>
               <div className="row">

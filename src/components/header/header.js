@@ -6,6 +6,37 @@ import { connect } from "react-redux";
 import "./header.scss";
 import { getBreedsBySearch } from "../../moduels/panel/panel.store";
 
+import styled from "styled-components";
+
+const SearchInput = styled.input`
+font-size: 14px;
+line-height: 21px;
+text-decoration: none solid rgb(73, 80, 87);
+vertical-align: middle;
+word-spacing: 0px;
+width: 500px;
+
+background-color:  #F2F2F2;
+background-position: 0% 0%;
+color:  #495057;
+
+transform: none;
+transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+box-sizing: border-box;
+border-left: 1px solid $cyan !important;
+border-top: 1px solid $cyan !important;
+border-bottom: 1px solid $cyan !important;
+border-right: none !important;
+border-radius: 0 !important;
+`;
+
+const SearchButton = styled.button`
+  border-left: none !important;
+  border-radius: 0 !important;
+  background-color: black !important;
+  
+`
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -48,26 +79,26 @@ class Header extends React.Component {
                 <NavLink to="/gallery"> Gallery</NavLink>
               </li>
             </ul>
+            <div className="flex flex-row ml-3 justify-content-center align-content-center">
+              <div className="input-group mb-4">
+                <SearchInput
+                    type="text"
+                    className="form-control"
+                    placeholder="Breed you like~"
+                    value={this.state.searchTerm}
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleEnter}
+                />
+                <SearchButton
+                    className="btn btn-primary"
+                    onClick={this.handleSearch}
+                >
+                  Find Cat
+                </SearchButton>
+              </div>
+            </div>
           </div>
         </nav>
-        <div className="flex flex-row ml-3">
-          <div className="input-group mb-4">
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.searchTerm}
-              onChange={this.handleChange}
-              onKeyPress={this.handleEnter}
-            />
-            <button
-              className="ml-2 btn btn-primary"
-              onClick={this.handleSearch}
-            >
-              Find Cat
-            </button>
-            {/*<Switcher />*/}
-          </div>
-        </div>
         <div className="divider" />
       </div>
     );

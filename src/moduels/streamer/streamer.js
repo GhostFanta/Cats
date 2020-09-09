@@ -23,7 +23,7 @@ class Streamer extends React.Component{
                     <button className="streamer-btn btn btn-primary rounded" onClick={this.toggleState}>Adoption Stream</button>
                 ):(
             <div className="streamer">
-                <button className="btn btn-sm rounded bg-danger text-light float-right" onClick={this.toggleState}>x</button>
+                <button className="btn-close btn btn-sm bg-danger float-right" onClick={this.toggleState}/>
                 <div className="container">
                 <div className="chat-log">
                     <div className="chat-log-item w-100">
