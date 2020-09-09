@@ -23,9 +23,9 @@ color:  #495057;
 transform: none;
 transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 box-sizing: border-box;
-border-left: 1px solid $cyan !important;
-border-top: 1px solid $cyan !important;
-border-bottom: 1px solid $cyan !important;
+border-left: 1px solid black !important;
+border-top: 1px solid black !important;
+border-bottom: 1px solid black !important;
 border-right: none !important;
 border-radius: 0 !important;
 `;
@@ -34,8 +34,9 @@ const SearchButton = styled.button`
   border-left: none !important;
   border-radius: 0 !important;
   background-color: black !important;
+  color: white;
   
-`
+`;
 
 class Header extends React.Component {
   constructor(props) {
@@ -79,21 +80,20 @@ class Header extends React.Component {
                 <NavLink to="/gallery"> Gallery</NavLink>
               </li>
             </ul>
-            <div className="flex flex-row ml-3 justify-content-center align-content-center">
-              <div className="input-group mb-4">
+            <div className="flex flex-row ml-3 justify-content-center align-content-center pt-2">
+              <div className="input-group">
                 <SearchInput
                     type="text"
-                    className="form-control"
                     placeholder="Breed you like~"
                     value={this.state.searchTerm}
                     onChange={this.handleChange}
                     onKeyPress={this.handleEnter}
                 />
                 <SearchButton
-                    className="btn btn-primary"
+                    className="btn"
                     onClick={this.handleSearch}
                 >
-                  Find Cat
+                  Find Breed
                 </SearchButton>
               </div>
             </div>
