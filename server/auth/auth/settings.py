@@ -24,7 +24,7 @@ SECRET_KEY = '-!-pmbn9o901gzt4))ul9#b$w_s8$$z-3u)031hpku)=rt+)p2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -71,6 +71,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 WSGI_APPLICATION = 'auth.wsgi.application'
 

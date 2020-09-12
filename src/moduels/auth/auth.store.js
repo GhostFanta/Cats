@@ -21,18 +21,31 @@ const setUserInfo = (username, email) => {
 };
 
 // Thunks
-export function userLogin(email, password) {
-    return (dispatch) => {
+export function userLogin(email, password, history) {
+    return (dispatch, getState) => {
         login(email, password).then((res) => {
-            dispatch(setToken);
+            const token = res.data.auth_token;
+            dispatch(setToken(token));
+            sessionStorage.setItem('token', token);
+            history.push("/search")
+        }).catch(e => {
+
         });
     }
 }
 
-export function userSignup(username, email, password) {
+export function userSignup(username, email, password, history) {
     return (dispatch) => {
         signup(username, email, password).then((res) => {
         });
+    }
+}
+
+export function userLogout(history) {
+    return (dispatch) => {
+        dispatch(setToken(""));
+        sessionStorage.setItem('token', "");
+        history.push("/search")
     }
 }
 

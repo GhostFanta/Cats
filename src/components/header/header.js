@@ -140,6 +140,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => {
   return {
     briefInfoList: state.panel.briefInfoList,
+    token: state.auth.token,
   };
 };
 

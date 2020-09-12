@@ -43,21 +43,23 @@ export function postSearch(searchTerm) {
 
 export const authServer = axios.create({
     // baseURL: "http://159.203.17.226:83/api",
-    baseURL: "http://localhost:8000/api",
+    baseURL: "http://127.0.0.1:8000/",
     headers: {
         "Content-Type": "application/json",
+        "accept": "application/json",
     },
 });
 
 export function login(useremail, userpassword) {
+    console.log('login service')
     return authServer.post("/token/login", {email: useremail, password: userpassword});
 }
 
 export function signup(username, useremail, userpassword) {
-    return authServer.post("/users", {username, email: useremail, password: userpassword});
+    return authServer.post("/users/", {username, email: useremail, password: userpassword});
 }
 
 export function me() {
-    return authServer.get("/users/me");
+    return authServer.get("/users/me/");
 }
 
