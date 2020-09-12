@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, {useState} from "react";
+import {NavLink} from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import "./header.scss";
-import { getBreedsBySearch } from "../../moduels/panel/panel.store";
+import {getBreedsBySearch} from "../../moduels/panel/panel.store";
+import {userLogout} from "../../moduels/auth/auth.store";
 
 import styled from "styled-components";
 
@@ -67,87 +68,97 @@ const AuthButton = styled.button`
 
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleEnter = this.handleEnter.bind(this);
-    this.state = {
-      searchTerm: "",
-    };
-  }
-
-  handleSearch() {
-    this.props.getBreedsBySearch(this.state.searchTerm);
-  }
-
-  handleEnter(e) {
-    if (e.key === "Enter") {
-      this.props.getBreedsBySearch(this.state.searchTerm);
-      return;
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleEnter = this.handleEnter.bind(this);
+        this.state = {
+            searchTerm: "",
+        };
     }
-  }
 
-  handleChange(e) {
-    this.setState({ searchTerm: e.target.value });
-  }
+    handleSearch() {
+        this.props.getBreedsBySearch(this.state.searchTerm);
+    }
 
-  render() {
-    return (
-      <div className="header">
-        <nav className="app-header navbar navbar-light">
-          <div className="row">
-            <div className="wrapper">
-              <img src={logo} alt="logo" width="130" height="50" />
+    handleEnter(e) {
+        if (e.key === "Enter") {
+            this.props.getBreedsBySearch(this.state.searchTerm);
+            return;
+        }
+    }
+
+    handleChange(e) {
+        this.setState({searchTerm: e.target.value});
+    }
+
+    render() {
+        return (
+            <div className="header">
+                <nav className="app-header navbar navbar-light">
+                    <div className="row">
+                        <div className="wrapper">
+                            <img src={logo} alt="logo" width="130" height="50"/>
+                        </div>
+                        <ul className="nav navbar-nav">
+                            <li className="active">
+                                <NavLink to="/search"> Search Panel</NavLink>
+                            </li>
+                            <li className="active">
+                                <NavLink to="/gallery"> Gallery</NavLink>
+                            </li>
+                        </ul>
+                        <div className="flex flex-row ml-3 justify-content-center align-content-center pt-2 mr-auto">
+                            <div className="input-group">
+                                <SearchInput
+                                    type="text"
+                                    placeholder="Breed you like~"
+                                    value={this.state.searchTerm}
+                                    onChange={this.handleChange}
+                                    onKeyPress={this.handleEnter}
+                                />
+                                <SearchButton
+                                    className="btn"
+                                    onClick={this.handleSearch}
+                                >
+                                    Find Breed
+                                </SearchButton>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mt-2 pt-2">
+                        {sessionStorage.getItem('token') && sessionStorage.getItem('token') !== "" ?
+                            <div>
+                                <AuthButton className="btn" onClick={this.props.signout}>Signout</AuthButton>
+                            </div>
+                            :
+                            <div>
+                                <AuthButton className="btn mr-2"><NavLink to="/login">Login</NavLink></AuthButton>
+                                <AuthButton className="btn"><NavLink to="/signup">Signup</NavLink></AuthButton>
+                            </div>
+
+                        }
+
+                    </div>
+                </nav>
+                <div className="divider"/>
             </div>
-            <ul className="nav navbar-nav">
-              <li className="active">
-                <NavLink to="/search"> Search Panel</NavLink>
-              </li>
-              <li className="active">
-                <NavLink to="/gallery"> Gallery</NavLink>
-              </li>
-            </ul>
-            <div className="flex flex-row ml-3 justify-content-center align-content-center pt-2 mr-auto">
-              <div className="input-group">
-                <SearchInput
-                    type="text"
-                    placeholder="Breed you like~"
-                    value={this.state.searchTerm}
-                    onChange={this.handleChange}
-                    onKeyPress={this.handleEnter}
-                />
-                <SearchButton
-                    className="btn"
-                    onClick={this.handleSearch}
-                >
-                  Find Breed
-                </SearchButton>
-              </div>
-            </div>
-          </div>
-          <div className="mt-2 pt-2">
-            <AuthButton className="btn mr-2"><NavLink to="/login">Login</NavLink></AuthButton>
-            <AuthButton className="btn"><NavLink to="/signup">Signup</NavLink></AuthButton>
-          </div>
-        </nav>
-        <div className="divider" />
-      </div>
-    );
-  }
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    briefInfoList: state.panel.briefInfoList,
-    token: state.auth.token,
-  };
+    return {
+        briefInfoList: state.panel.briefInfoList,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    getBreedsBySearch: (searchTerm) => dispatch(getBreedsBySearch(searchTerm)),
-  };
+    return {
+        getBreedsBySearch: (searchTerm) => dispatch(getBreedsBySearch(searchTerm)),
+        signout: () => dispatch(userLogout())
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

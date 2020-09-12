@@ -45,7 +45,6 @@ export function userLogout(history) {
     return (dispatch) => {
         dispatch(setToken(""));
         sessionStorage.setItem('token', "");
-        history.push("/search")
     }
 }
 
