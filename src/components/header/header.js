@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import Switcher from "../../components/switcher/switcher";
 import { connect } from "react-redux";
 import "./header.scss";
 import { getBreedsBySearch } from "../../moduels/panel/panel.store";
@@ -35,8 +34,37 @@ const SearchButton = styled.button`
   border-radius: 0 !important;
   background-color: black !important;
   color: white;
-  
+  &:hover {
+    color: grey;
+  }
 `;
+
+const AuthButton = styled.button`
+  font-family: realtime_textbold, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none solid rgb(0, 108, 255);
+  text-align: center;
+  text-transform: uppercase;
+  word-spacing: 0px;
+  background-color:  #FFFFFF;
+  background-position: 0px 0px;
+  color:  #000000;
+  height: 32px;
+  border: 2px solid  #2893EB;
+  padding: 0 10px 0 10px;
+  transform: none
+  transition: all 0s ease 0s
+  outline: rgb(255, 0, 0) dashed 1px
+  box-sizing: border-box
+  border-top-left-radius: 4px
+  border-top-right-radius: 4px
+  border-bottom-left-radius: 4px
+  border-bottom-right-radius: 4px
+  box-shadow: 0 2px 7px 1px rgba(47,125,235,.16);
+`;
+
 
 class Header extends React.Component {
   constructor(props) {
@@ -80,7 +108,7 @@ class Header extends React.Component {
                 <NavLink to="/gallery"> Gallery</NavLink>
               </li>
             </ul>
-            <div className="flex flex-row ml-3 justify-content-center align-content-center pt-2">
+            <div className="flex flex-row ml-3 justify-content-center align-content-center pt-2 mr-auto">
               <div className="input-group">
                 <SearchInput
                     type="text"
@@ -97,6 +125,10 @@ class Header extends React.Component {
                 </SearchButton>
               </div>
             </div>
+          </div>
+          <div className="mt-2 pt-2">
+            <AuthButton className="btn mr-2"><NavLink to="/login">Login</NavLink></AuthButton>
+            <AuthButton className="btn"><NavLink to="/signup">Signup</NavLink></AuthButton>
           </div>
         </nav>
         <div className="divider" />

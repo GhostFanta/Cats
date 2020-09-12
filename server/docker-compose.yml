@@ -15,6 +15,25 @@ services:
     container_name: cat_mongo
     ports:
     - 27017:27017
+  streamer:
+    build: ./streamer
+    container_name: cat_streamer
+    ports:
+      - 2181:2181
+    expose:
+      - 2181
+    depends_on:
+      - zookeeper
+  zookeeper:
+    image: zookeeper
+    container_name: cat_zookeeper
+    ports:
+      - 2182:2182
+    expose:
+      - 2182
+  customer:
+    build: ./customer
+    container_name: cat_customer
   nginx:
     image: nginx
     container_name: cat_nginx

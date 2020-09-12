@@ -1,6 +1,6 @@
 # Project Breeder 
 
-> Pet searching panel based on integrated third party API. 
+> Pet searching panel based on integrated third party API with authentication & user management. 
 
 ## ToolChain:
 + React
@@ -8,6 +8,8 @@
 + React-router
 + Bootstrap
 + axios
++ Express
++ Django
 
 ##### Feature List
 + [ ] List breeds result from search(breed, origin).

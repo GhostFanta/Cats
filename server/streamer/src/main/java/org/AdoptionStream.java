@@ -1,14 +1,11 @@
 package org;
 
-import com.google.common.collect.Lists;
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Client;
 import com.twitter.hbc.core.Constants;
 import com.twitter.hbc.core.Hosts;
 import com.twitter.hbc.core.HttpHosts;
 import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
-import com.twitter.hbc.core.endpoint.StatusesSampleEndpoint;
-import com.twitter.hbc.core.endpoint.StreamingEndpoint;
 import com.twitter.hbc.core.processor.StringDelimitedProcessor;
 import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
@@ -21,8 +18,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-//import lombok.extern.slf4j.Slf4j;
-
 public class AdoptionStream {
 
     Client tweetClient;
@@ -31,23 +26,27 @@ public class AdoptionStream {
     KafkaProducer<String, String> producer;
     String topic;
 
-    /**
-     * Declare the host you want to connect to, the endpoint, and authentication (basic auth or oauth)
-     */
-    Hosts hosebirdHosts = new HttpHosts(Constants.STREAM_HOST);
-    StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
+    String apiKey;
+    String apiSecret;
+    String token;
+    String secret;
+    List<String> topics;
+
 
     public AdoptionStream(String apiKey, String apiSecret, String token, String secret, String brokerList, List<String> topics) {
-        this.hosebirdEndpoint.trackTerms(topics);
         this.msgQueue = new LinkedBlockingQueue<String>(1000);
-        this.tweetClient = this.clientBuilder(msgQueue, apiKey, apiSecret, token, secret);
         producer = this.producerBuilder(brokerList);
         this.topic = topics.get(0);
+        this.apiKey = apiKey;
+        this.apiSecret = apiSecret;
+        this.token = token;
+        this.secret = secret;
+        this.topics = topics;
     }
 
 
     public void run() {
-        tweetClient.connect();
+
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
                 System.out.println("Finished running the app.");
@@ -56,42 +55,51 @@ public class AdoptionStream {
             }
         }));
 
-        while (!this.tweetClient.isDone()) {
+        BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
+
+        Hosts hosebirdHosts = new HttpHosts(Constants.STREAM_HOST);
+        StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
+        List<String> terms = this.topics;
+        hosebirdEndpoint.trackTerms(terms);
+
+        Authentication hosebirdAuth  = new OAuth1(this.apiKey,
+                this.apiSecret,
+                this.token,
+                this.secret);
+
+
+        ClientBuilder clientBuilder = new ClientBuilder();
+        clientBuilder.name("tweet-client")
+                .hosts(hosebirdHosts)
+                .authentication(hosebirdAuth)
+                .endpoint(hosebirdEndpoint)
+                .processor(new StringDelimitedProcessor(msgQueue));
+
+        Client hosebirdClient = clientBuilder.build();
+        hosebirdClient.connect();
+
+        while(!hosebirdClient.isDone()) {
             String msg = null;
             try {
                 msg = msgQueue.poll(5, TimeUnit.SECONDS);
-//                 msg = msgQueue.take();
                 System.out.println(msg);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 tweetClient.stop();
             }
-
             if (msg != null) {
                 producer.send(new ProducerRecord<String, String>(topic, null, msg), new Callback() {
                     @Override
                     public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                         if (e != null) {
-//                            log.error("Some wrong.", e);
+                            System.out.println(e.toString());
                         }
                     }
                 });
             }
         }
-    }
 
-    public Client clientBuilder(BlockingQueue<String> msgQueue, String apiKey, String apiSecret, String token, String secret) {
-        StreamingEndpoint endpoint = new StatusesSampleEndpoint();
-        Authentication hosebirdAuth = new OAuth1(apiKey, apiSecret, token, secret);
-
-        Client builder = new ClientBuilder()
-                .hosts(Constants.STREAM_HOST)
-                .endpoint(endpoint)
-                .authentication(hosebirdAuth)
-                .processor(new StringDelimitedProcessor(msgQueue))
-                .build();
-
-        return builder;
+        hosebirdClient.stop();
     }
 
     public KafkaProducer<String, String> producerBuilder(String brokers) {
