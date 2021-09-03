@@ -15,7 +15,7 @@
     "bootstrap": "^4.4.1",
     "connected-react-router": "^6.8.0",
     "history": "^4.10.1",
-    "immer": "^6.0.3",
+    "immer": "^9.0.6",
     "jquery": "^3.5.1",
     "lodash": "^4.17.15",
     "moments": "^0.0.2",
